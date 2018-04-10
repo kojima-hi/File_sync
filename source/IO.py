@@ -5,6 +5,25 @@ import os
 import json
 
 
+def get_dirs(server_home):
+    pwd = os.getcwd()
+    dir_lst = pwd.split('/')
+    pos = dir_lst.index('projects')
+
+    dir_dict = {}
+
+    prog_dir = '/'.join(dir_lst[:pos+2])
+    dir_dict['from'] = prog_dir
+
+    exc_home_dir = '/'.join(dir_lst[pos:pos+2])
+    dir_dict['to'] = os.path.join(server_home, exc_home_dir)
+
+    home_dir = '/'.join(dir_lst[:pos])
+    dir_dict['home'] = home_dir
+
+    return dir_dict
+
+
 def get_file_data_as_list(fname):
     lst = []
     with open(fname, 'r') as f:
@@ -27,11 +46,23 @@ def check_args(args, server_lst):
     return
 
 
+def check_exist_server_file(script_path):
+    server_dict_path = os.path.join(script_path, '../data/server.json')
+
+    if not os.path.exists(server_dict_path):
+        server_dict_template_path = os.path.join(script_path, '../data/server_template.json')
+        print('Make %s using %s as reference'%(server_dict_path, server_dict_template_path))
+        exit()
+
+    return
+
+
 def get_server_list():
     script_path = os.path.dirname(os.path.abspath(__file__))
-    command_dict_path = os.path.join(script_path, '../data/server.json')
+    check_exist_server_file(script_path)
+    server_dict_path = os.path.join(script_path, '../data/server.json')
 
-    with open(command_dict_path, 'r') as f:
+    with open(server_dict_path, 'r') as f:
         server_dict = json.load(f)
 
     return server_dict

@@ -3,8 +3,7 @@
 import paramiko
 import subprocess
 import os
-from directory import get_dirs
-from IO import get_file_data_as_list
+from IO import get_file_data_as_list, get_dirs
 
 
 def make_basedir(dir_dict, server, system):
@@ -54,8 +53,8 @@ def rsync_from(dir_dict, server, system):
     for dir_tmp in dir_lst:
         from_dir = os.path.join(dir_dict['from'], dir_tmp)
         to_dir = os.path.join(dir_dict['to'], dir_tmp) + '/'
-        cmd = 'rsync -av %s:%s %s'%(server, to_dir, from_dir)
 
+        cmd = 'rsync -av %s:%s %s'%(server, to_dir, from_dir)
         subprocess.run(cmd.split())
 
     return
