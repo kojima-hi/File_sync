@@ -1,10 +1,12 @@
 #!/bin/usr/env python
 # -*- coding: utf-8 -*-
-from IO import get_parse, get_server_list, check_args
+from IO import get_parse, get_server_list, check_args, check_position
 from rsync import rsync_main
 
 
 def main():
+    check_position()
+
     # get arguments
     args = get_parse()
     server_dict = get_server_list()

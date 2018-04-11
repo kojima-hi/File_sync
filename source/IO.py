@@ -5,6 +5,16 @@ import os
 import json
 
 
+def check_position():
+    pwd = os.getcwd()
+    items = pwd.split('/')
+    if not items[-2] == 'projects':
+        print('execute this just under /path/to/projects/project_name/')
+        exit()
+
+    return
+
+
 def extract_common_dir(pre_dir_lst):
     dir_lst = []
     for tmpdir in pre_dir_lst:
