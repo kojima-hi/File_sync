@@ -5,6 +5,16 @@ import os
 import json
 
 
+def extract_common_dir(pre_dir_lst):
+    dir_lst = []
+    for tmpdir in pre_dir_lst:
+        items = tmpdir.split('/')
+        n_elm = len(items)
+        dir_lst.append('/'.join(items[:n_elm-1]))
+
+    return dir_lst
+
+
 def get_dirs(server_home):
     pwd = os.getcwd()
     dir_lst = pwd.split('/')
@@ -72,17 +82,17 @@ def get_parse():
     args = sys.argv
 
     if(len(args) < 4):
-        print('usage: $ script.py [to|from] server system')
+        print('usage: $ script.py [to|from] server sync_dir')
         exit()
 
     direct = args[1]
     server = args[2]
-    system = args[3]
+    sync_dir = args[3]
 
     args = {}
     args['direct'] = direct
     args['server'] = server
-    args['system'] = system
+    args['sync_dir'] = sync_dir
 
     return args
 
