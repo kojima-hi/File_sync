@@ -1,5 +1,5 @@
 # File sync
-Synchronizes files.
+Synchronizes files in current server with those in another server.
 
 ## Work
 ### Synchronize
