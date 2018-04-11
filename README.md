@@ -7,7 +7,7 @@ This program synchronizes directories under `/path/to/projects/<project name>/`.
 
 Type of synchronizing directories are two:
 
-(1) choiced directory as synchronizing_directory, and
+(1) choiced directory as synchronizing_directory in usage, and
 
 (2) common use directories written in
 `/path/to/projects/<project name>/common/sync/commondir.txt` in each line.
