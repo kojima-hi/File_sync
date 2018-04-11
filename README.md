@@ -15,7 +15,7 @@ Type of synchronizing directories are two:
 ### Server
 Server information with its home directory of project in json format is put at 
 `/path/to/file_sync/data/server.json`.
-To connect `.ssh/config` is used.
+To connect `~/.ssh/config` is used.
 
 ## Usage
 Execute this program just under `/path/to/projects/<project name>/` as
