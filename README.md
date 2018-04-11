@@ -1,5 +1,5 @@
 # File sync
-Syncronizes files.
+Synchronizes files.
 
 ## Work
 ### Synchronize
