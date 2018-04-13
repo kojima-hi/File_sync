@@ -37,12 +37,14 @@ def rsync(dir_dict, server, sync_dir, direct, common_file):
     dir_lst = get_file_data_as_list(dir_dict['from'] + common_file)
     dir_lst.append(sync_dir)
     for dir_tmp in dir_lst:
-        from_dir = os.path.join(dir_dict['from'], dir_tmp) + '/'
+        from_dir = os.path.join(dir_dict['from'], dir_tmp)
         to_dir = os.path.join(dir_dict['to'], dir_tmp)
 
         if direct == 'to':
+            from_dir = from_dir + '/'
             cmd = 'rsync -av %s %s:%s'%(from_dir, server, to_dir)
         elif direct == 'from':
+            to_dir = to_dir + '/'
             cmd = 'rsync -av %s:%s %s'%(server, to_dir, from_dir)
 
         subprocess.run(cmd.split())
