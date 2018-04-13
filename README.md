@@ -1,6 +1,7 @@
 # File sync
 Synchronizes files in current server with those in another server.
 
+
 ## Work
 ### Synchronize
 This program synchronizes directories under `/path/to/projects/<project name>/`.
