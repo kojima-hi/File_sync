@@ -3,23 +3,34 @@
 import paramiko
 import subprocess
 import os
-from IO import get_file_data_as_list, get_dirs, extract_common_dir
+from IO import get_dirs, extract_common_dir
 
 
-def make_basedir(dir_dict, server, sync_dir, common_file):
-    common_dir_lst = get_file_data_as_list(dir_dict['from'] + common_file)
+def make_basedir(dir_dict, server, sync_dir):
+    common_dir_lst = [] #get_file_data_as_list(dir_dict['from'] + common_file)
     dir_lst = extract_common_dir(common_dir_lst)
 
     config_file = dir_dict['home'] + '/.ssh/config'
     ssh_config = paramiko.SSHConfig()
     ssh_config.parse(open(config_file, 'r'))
     lkup = ssh_config.lookup(server)
+    print(lkup, server, ssh_config)
+    print('debug python'); exit()
+    
     with paramiko.SSHClient() as ssh:
         ssh.load_system_host_keys()
-        ssh.connect(
-            hostname=lkup['hostname'], username=lkup['user'],
-            key_filename=lkup['identityfile']
-        )
+        if 'identityfile' in lkup:
+            ssh.connect(
+                hostname=lkup['hostname'], username=lkup['user'],
+                key_filename=lkup['identityfile']
+            )
+        else:
+            # very hard code!!!
+            print('Very Hard Code!!')
+            ssh.connect(
+                hostname=lkup['hostname'], username=lkup['user'],
+                password='Mtbys-2019'
+            ) 
 
         for dir_tmp in dir_lst:
             path = os.path.join(dir_dict['to'], dir_tmp)
@@ -31,10 +42,10 @@ def make_basedir(dir_dict, server, sync_dir, common_file):
     return
 
 
-def rsync(dir_dict, server, sync_dir, direct, common_file):
+def rsync(dir_dict, server, sync_dir, direct):
 
     # common dir
-    dir_lst = get_file_data_as_list(dir_dict['from'] + common_file)
+    dir_lst = [] #get_file_data_as_list(dir_dict['from'] + common_file)
     dir_lst.append(sync_dir)
     for dir_tmp in dir_lst:
         from_dir = os.path.join(dir_dict['from'], dir_tmp)
@@ -55,12 +66,11 @@ def rsync(dir_dict, server, sync_dir, direct, common_file):
 def rsync_main(direct, server, sync_dir, server_home):
 
     dir_dict = get_dirs(server_home)
-    common_file = '/common/sync/commondir.txt'
 
     if direct == 'to':
-        make_basedir(dir_dict, server, sync_dir, common_file)
+        make_basedir(dir_dict, server, sync_dir)
 
-    rsync(dir_dict, server, sync_dir, direct, common_file)
+    rsync(dir_dict, server, sync_dir, direct)
 
     return
 
