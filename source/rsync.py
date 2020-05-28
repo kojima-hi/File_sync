@@ -14,8 +14,6 @@ def make_basedir(dir_dict, server, sync_dir):
     ssh_config = paramiko.SSHConfig()
     ssh_config.parse(open(config_file, 'r'))
     lkup = ssh_config.lookup(server)
-    print(lkup, server, ssh_config)
-    print('debug python'); exit()
     
     with paramiko.SSHClient() as ssh:
         ssh.load_system_host_keys()
@@ -27,10 +25,11 @@ def make_basedir(dir_dict, server, sync_dir):
         else:
             # very hard code!!!
             print('Very Hard Code!!')
-            ssh.connect(
-                hostname=lkup['hostname'], username=lkup['user'],
-                password='Mtbys-2019'
-            ) 
+            if server == 'oct':
+                ssh.connect(
+                    hostname=lkup['hostname'], username=lkup['user'],
+                    password='Kojima3-oct'
+                ) 
 
         for dir_tmp in dir_lst:
             path = os.path.join(dir_dict['to'], dir_tmp)
