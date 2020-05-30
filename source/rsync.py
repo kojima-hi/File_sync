@@ -24,7 +24,7 @@ def make_basedir(dir_dict, server, sync_dir):
             )
         else:
             # very hard code!!!
-            print('Very Hard Code!!')
+            print('Very Hard Code! ', server)
             if server == 'oct':
                 ssh.connect(
                     hostname=lkup['hostname'], username=lkup['user'],
@@ -57,6 +57,8 @@ def rsync(dir_dict, server, sync_dir, direct):
             to_dir = to_dir + '/'
             cmd = 'rsync -av %s:%s %s'%(server, to_dir, from_dir)
 
+        print('from: {}'.format(from_dir))
+        print('to:   {}'.format(to_dir))
         subprocess.run(cmd.split())
 
     return
