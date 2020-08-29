@@ -5,10 +5,10 @@ import os
 import json
 
 
-def check_position():
+def check_position(check_dir_num=-2):
     pwd = os.getcwd()
     items = pwd.split('/')
-    if not items[-2] == 'projects':
+    if not items[check_dir_num] == 'projects':
         print('execute this just under /path/to/projects/project_name/')
         exit()
 
@@ -32,10 +32,12 @@ def get_dirs(server_home):
 
     dir_dict = {}
 
-    prog_dir = '/'.join(dir_lst[:pos+2])
+    #prog_dir = '/'.join(dir_lst[:pos+2])
+    prog_dir = '/'.join(dir_lst[:])
     dir_dict['from'] = prog_dir
 
-    exc_home_dir = '/'.join(dir_lst[pos:pos+2])
+    #exc_home_dir = '/'.join(dir_lst[pos:pos+2])
+    exc_home_dir = '/'.join(dir_lst[pos:])
     dir_dict['to'] = os.path.join(server_home, exc_home_dir)
 
     home_dir = '/'.join(dir_lst[:pos])
@@ -92,17 +94,29 @@ def get_parse():
     args = sys.argv
 
     if(len(args) < 4):
-        print('usage: $ script.py [to|from] server sync_dir')
+        print('usage: $ script.py sync_dir [to|from] server [mode]')
         exit()
 
-    direct = args[1]
-    server = args[2]
-    sync_dir = args[3]
+    sync_dir = args[1]
+    direct = args[2]
+    server = args[3]
+
+    mode = 'normal'
+    if len(args) == 5:
+        mode = args[4]
 
     args = {}
-    args['direct'] = direct
+    if mode == 'analysis':
+        args['sync_dir'] = 'analysis'
+        args['direct'] = 'from'
+    elif mode == 'analysis_man':
+        args['sync_dir'] = 'analysis_man'
+        args['direct'] = 'from'
+    else:
+        args['sync_dir'] = sync_dir
+        args['direct'] = direct
     args['server'] = server
-    args['sync_dir'] = sync_dir
+    args['mode'] = mode
 
     return args
 
