@@ -17,6 +17,7 @@ def make_basedir(dir_dict, server, sync_dir):
     
     with paramiko.SSHClient() as ssh:
         ssh.load_system_host_keys()
+        
         if 'identityfile' in lkup:
             ssh.connect(
                 hostname=lkup['hostname'], username=lkup['user'],
@@ -26,6 +27,11 @@ def make_basedir(dir_dict, server, sync_dir):
             # very hard code!!!
             print('Very Hard Code! ', server)
             if server == 'oct':
+                ssh.connect(
+                    hostname=lkup['hostname'], username=lkup['user'],
+                    password='Kojima3-oct'
+                ) 
+            elif server == 'oct-hkr':
                 ssh.connect(
                     hostname=lkup['hostname'], username=lkup['user'],
                     password='Kojima3-oct'
