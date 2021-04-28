@@ -48,6 +48,7 @@ def make_basedir(dir_dict, server, sync_dir):
 
 
 def rsync(dir_dict, server, sync_dir, direct):
+    rsync_cmd_base = 'rsync -vau'
 
     # common dir
     dir_lst = [] #get_file_data_as_list(dir_dict['from'] + common_file)
@@ -58,12 +59,12 @@ def rsync(dir_dict, server, sync_dir, direct):
 
         if direct == 'to':
             from_dir = from_dir + '/'
-            cmd = 'rsync -vau %s %s:%s'%(from_dir, server, to_dir)
+            cmd = rsync_cmd_base + ' %s %s:%s'%(from_dir, server, to_dir)
             print('from: {}'.format(from_dir))
             print('to:   {}'.format(to_dir))
         elif direct == 'from':
             to_dir = to_dir + '/'
-            cmd = 'rsync -vau %s:%s %s'%(server, to_dir, from_dir)
+            cmd = rsync_cmd_base + ' %s:%s %s'%(server, to_dir, from_dir)
             print('from: {}'.format(to_dir))
             print('to:   {}'.format(from_dir))
 
