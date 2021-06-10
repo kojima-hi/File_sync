@@ -1,2 +1,21 @@
-source/__pycache__
 data/server.json
+
+# Python
+source/__pycache__
+*.pyc
+
+# Tex
+*.aux
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.idx
+*.ilg
+*.ind
+*.toc
+*.synctex.gz
+
+# Mac
+.DS_Store
+
