@@ -98,7 +98,13 @@ def get_parse():
         exit()
 
     sync_dir = args[1]
-    direct = args[2]
+    if args[2][:1] == 'to':
+        direct = 'to'
+    elif args[2][:1] == 'fr':
+        direct = 'from'
+    else:
+        print('  2nd argument must be to|fr(om)')
+        exit(1)
     server = args[3]
 
     mode = 'normal'
